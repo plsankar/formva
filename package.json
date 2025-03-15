@@ -1,6 +1,20 @@
 {
   "name": "formva-lib",
   "private": true,
+  "description": "A vanilla form validation library that works zod",
+  "homepage": "https://github.com/plsankar/formva",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/plsankar/formva.git"
+  },
+  "author": {
+    "name": "Lakshmi Sankar",
+    "email": "me@lakshmisankar.com",
+    "url": "https://lakshmisankar.com"
+  },
+  "bugs": {
+    "url": "https://github.com/plsankar/formva/issues"
+  },
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
