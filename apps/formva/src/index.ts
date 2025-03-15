@@ -28,7 +28,7 @@ const DEFAULT_HTMLCLASSES: HTMLClasses = {
     feedbackError: "invalid-feedback",
 };
 
-class FormVal {
+class Formva {
     formEl: HTMLFormElement;
     schema: ZodSchema;
     submitHandler: SubmitHanlder;
@@ -126,7 +126,7 @@ class FormVal {
             el.addEventListener("keyup", this.handleChange.bind(this));
         });
 
-        this.formEl.querySelectorAll(".formval-feedback").forEach((el) => el.remove());
+        this.formEl.querySelectorAll(".formva-feedback").forEach((el) => el.remove());
 
         if (this.issues == null || this.issues?.length == 0) {
             return;
@@ -143,7 +143,7 @@ class FormVal {
 
             el.setCustomValidity(joinedMessages);
             const feedbackEl = document.createElement("div");
-            feedbackEl.className = `formval-feedback formval-feedback-error`;
+            feedbackEl.className = `formva-feedback formva-feedback-error`;
             if (this.classes?.feedback) {
                 feedbackEl.classList.add(this.classes.feedback);
             }
@@ -162,7 +162,7 @@ class FormVal {
     }
 }
 
-export default function formval({
+export default function formva({
     formEl,
     schema,
     submitHandler,
@@ -174,14 +174,14 @@ export default function formval({
     classes?: HTMLClasses;
 }) {
     if (!formEl) {
-        console.error("FormVal: the form element is not present!");
+        console.error("Formva: the form element is not present!");
     }
-    new FormVal(formEl, schema, submitHandler, classes);
+    new Formva(formEl, schema, submitHandler, classes);
 }
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-ignore
-window.formval = formval;
+window.formva = formva;
 
 type ZodSchema = ZodObject<Record<string, ZodTypeAny>>;
 
