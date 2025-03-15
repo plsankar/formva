@@ -36,7 +36,9 @@
     "scripts": {
         "dev": "rollup -c --watch",
         "build": "tsc && rollup -c",
-        "lint": "eslint"
+        "lint": "eslint",
+        "prepack": "npm run build",
+        "prepublish": "npm run build"
     },
     "devDependencies": {
         "@repo/typescript-config": "workspace:*",
