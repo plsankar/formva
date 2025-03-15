@@ -1,7 +1,7 @@
-export function debounce(func: Function, delay: number): Function {
+export function debounce(func: (...args: unknown[]) => void, delay: number): (...args: unknown[]) => void {
     let timeoutId: ReturnType<typeof setTimeout>;
 
-    return function (...args: any[]) {
+    return function (...args: unknown[]) {
         // Clear the existing timeout to reset the debounce
         if (timeoutId) {
             clearTimeout(timeoutId);

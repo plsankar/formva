@@ -1,13 +1,11 @@
-import { ZodError, ZodIssue, ZodObject } from "zod";
+import type { ZodIssue, ZodObject, ZodTypeAny } from "zod";
+import { ZodError } from "zod";
 
 import { debounce } from "./utils";
 
 export function isZodError(err: unknown): err is ZodError {
-    return Boolean(
-        err &&
-            (err instanceof ZodError || (err as ZodError).name === "ZodError")
-    );
-} 
+    return Boolean(err && (err instanceof ZodError || (err as ZodError).name === "ZodError"));
+}
 
 function transformIssues(issues: ZodIssue[]) {
     const transformedObject: { [key: string]: ZodIssue[] } = {};
@@ -32,21 +30,16 @@ const DEFAULT_HTMLCLASSES: HTMLClasses = {
 
 class FormVal {
     formEl: HTMLFormElement;
-    schema: ZodObject<any>;
-    submitHandler: Function;
+    schema: ZodSchema;
+    submitHandler: SubmitHanlder;
     classes?: HTMLClasses = DEFAULT_HTMLCLASSES;
 
     issues: ZodIssue[] | null = null;
     formDataObject: FormDataObject = {};
 
-    handleChange: Function;
+    handleChange: () => void;
 
-    constructor(
-        formEl: HTMLFormElement,
-        schema: ZodObject<any>,
-        submitHandler: SubmitHanlder,
-        classes?: HTMLClasses
-    ) {
+    constructor(formEl: HTMLFormElement, schema: ZodSchema, submitHandler: SubmitHanlder, classes?: HTMLClasses) {
         this.formEl = formEl;
         this.schema = schema;
         this.submitHandler = submitHandler;
@@ -63,8 +56,7 @@ class FormVal {
     }
 
     onSubmit(event: SubmitEvent) {
-        // event.preventDefault();
-        var { valid, data } = this.validate();
+        const { valid, data } = this.validate();
 
         if (valid) {
             this.submitHandler(this.formEl, event, data);
@@ -73,7 +65,15 @@ class FormVal {
         }
     }
 
-    validate() {
+    validate():
+        | {
+              valid: false;
+              data: null;
+          }
+        | {
+              valid: true;
+              data: FormDataObject;
+          } {
         this.issues = [];
         const formData = new FormData(this.formEl);
 
@@ -83,14 +83,12 @@ class FormVal {
             this.formDataObject[key] = value;
         });
 
-        // from https://openjavascript.info/2022/12/13/get-checked-checkbox-values-from-html-form-with-javascript/
-        this.formEl
-            .querySelectorAll<HTMLInputElement>('[type="checkbox"]')
-            .forEach((item) => {
-                if (item.checked === true && item.name) {
-                    this.formDataObject[item.name] = item.value;
-                }
-            });
+        // @source https://openjavascript.info/2022/12/13/get-checked-checkbox-values-from-html-form-with-javascript/
+        this.formEl.querySelectorAll<HTMLInputElement>('[type="checkbox"]').forEach((item) => {
+            if (item.checked === true && item.name) {
+                this.formDataObject[item.name] = item.value;
+            }
+        });
 
         const parsed = this.schema.safeParse(this.formDataObject);
 
@@ -115,9 +113,7 @@ class FormVal {
         }
 
         Object.keys(this.formDataObject).forEach((path) => {
-            var el = this.formEl.querySelector<HTMLInputElement>(
-                `[name="${path}"]`
-            );
+            const el = this.formEl.querySelector<HTMLInputElement>(`[name="${path}"]`);
             if (!el) {
                 return;
             }
@@ -130,9 +126,7 @@ class FormVal {
             el.addEventListener("keyup", this.handleChange.bind(this));
         });
 
-        this.formEl
-            .querySelectorAll(".formval-feedback")
-            .forEach((el) => el.remove());
+        this.formEl.querySelectorAll(".formval-feedback").forEach((el) => el.remove());
 
         if (this.issues == null || this.issues?.length == 0) {
             return;
@@ -141,15 +135,11 @@ class FormVal {
         const _issues = transformIssues(this.issues);
 
         Object.keys(_issues).forEach((path) => {
-            var el = this.formEl.querySelector<HTMLInputElement>(
-                `[name="${path}"]`
-            );
+            const el = this.formEl.querySelector<HTMLInputElement>(`[name="${path}"]`);
             if (!el) {
                 return;
             }
-            const joinedMessages = _issues[path]
-                .map((issue) => issue.message)
-                .join("<br>");
+            const joinedMessages = _issues[path].map((issue) => issue.message).join("<br>");
 
             el.setCustomValidity(joinedMessages);
             const feedbackEl = document.createElement("div");
@@ -162,10 +152,7 @@ class FormVal {
             }
             feedbackEl.innerHTML = joinedMessages;
 
-            if (
-                el.nextElementSibling &&
-                el.nextElementSibling.tagName == "LABEL"
-            ) {
+            if (el.nextElementSibling && el.nextElementSibling.tagName == "LABEL") {
                 const label = el.nextElementSibling;
                 el.parentNode?.insertBefore(feedbackEl, label.nextSibling);
             } else {
@@ -182,7 +169,7 @@ export default function formval({
     classes,
 }: {
     formEl: HTMLFormElement;
-    schema: ZodObject<any>;
+    schema: ZodSchema;
     submitHandler: SubmitHanlder;
     classes?: HTMLClasses;
 }) {
@@ -192,16 +179,15 @@ export default function formval({
     new FormVal(formEl, schema, submitHandler, classes);
 }
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-ignore
 window.formval = formval;
 
-type SubmitHanlder = (
-    formEl: HTMLFormElement,
-    event: SubmitEvent,
-    data: Object
-) => void;
+type ZodSchema = ZodObject<Record<string, ZodTypeAny>>;
 
-type FormDataObject = { [key: string | number]: any };
+type SubmitHanlder = (formEl: HTMLFormElement, event: SubmitEvent, data: object) => void;
+
+type FormDataObject = { [key: string | number]: unknown };
 
 type HTMLClasses = {
     form: false | string;
