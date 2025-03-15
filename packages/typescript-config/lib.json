@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+    "compilerOptions": {
+        "lib": ["es5", "es6", "es7", "esnext", "dom"],
+        "target": "es2018",
+        "removeComments": false,
+        "esModuleInterop": true,
+        "moduleResolution": "node",
+        "resolveJsonModule": true,
+        "strict": true,
+        "skipLibCheck": true,
+        "strictPropertyInitialization": false,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "noImplicitReturns": true,
+        "noFallthroughCasesInSwitch": true,
+        "downlevelIteration": true,
+        "isolatedModules": true,
+        "module": "es2015",
+        "declaration": true,
+        "declarationMap": false,
+        "sourceMap": false,
+        "declarationDir": "dist"
+    },
+    "include": ["./src/**/*"]
+}

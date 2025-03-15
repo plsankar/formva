@@ -1,0 +1,8 @@
+{
+    "extends": "@repo/typescript-config/lib.json",
+    "compilerOptions": {
+        "declarationDir": "dist"
+    },
+    "include": ["./src/**/*"]
+}
+  
