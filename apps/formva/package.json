@@ -35,7 +35,7 @@
     },
     "scripts": {
         "dev": "rollup -c --watch",
-        "build": "tsc && rollup -c",
+        "build": "tsc && rollup -c && cp ../../README.md README.md",
         "lint": "eslint",
         "prepack": "npm run build",
         "prepublish": "npm run build"
