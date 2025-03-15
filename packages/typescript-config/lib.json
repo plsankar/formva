@@ -1,5 +1,5 @@
 {
-  "$schema": "https://json.schemastore.org/tsconfig",
+    "$schema": "https://json.schemastore.org/tsconfig",
     "compilerOptions": {
         "lib": ["es5", "es6", "es7", "esnext", "dom"],
         "target": "es2018",
@@ -20,7 +20,8 @@
         "declaration": true,
         "declarationMap": false,
         "sourceMap": false,
-        "declarationDir": "dist"
+        "declarationDir": "dist",
+        "noEmit": true
     },
     "include": ["./src/**/*"]
 }
