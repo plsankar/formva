@@ -1,4 +1,3 @@
-
 # Formva
 
 Formva is a lightweight, vanilla JavaScript form validation library that integrates with Zod, a TypeScript-first schema declaration and validation library.
@@ -85,13 +84,6 @@ formva({
 ```
 
 
-## Acknowledgements
-
- - [Zod](https://zod.dev/)
-## Contributing
-
-Contributions are always welcome!
-
 ## Run Locally
 
 Clone the project
@@ -119,7 +111,15 @@ Start the server
 ```
 
 
+## Contributing
+
+Contributions are always welcome!
+
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
 
+
+## Acknowledgements
+
+ - [Zod](https://zod.dev/)
