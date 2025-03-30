@@ -1,6 +1,6 @@
 {
     "name": "formva",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "description": "A vanilla form validation library that works zod",
     "homepage": "https://github.com/plsankar/formva",
     "repository": {
