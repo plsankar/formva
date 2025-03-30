@@ -1,6 +1,7 @@
 # Formva
 
 Formva is a lightweight, vanilla JavaScript form validation library that integrates with Zod, a TypeScript-first schema declaration and validation library.
+
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
 ![GitHub contributors](https://img.shields.io/github/contributors/plsankar/formva)
 ![NPM Downloads](https://img.shields.io/npm/d18m/formva)
@@ -10,17 +11,16 @@ Formva is a lightweight, vanilla JavaScript form validation library that integra
 ![jsDelivr hits (npm)](https://img.shields.io/jsdelivr/npm/hy/formva)
 ![Gitea Issues](https://img.shields.io/gitea/issues/all/plsankar/formva)
 
-
 ## Installation
 
 Install with package managers
 
 ```bash
-  npm install formva
+npm install formva
 ```
 
 ```bash
-  pnpm add formva
+pnpm add formva
 ```
 
 Add via CDN links
@@ -36,19 +36,19 @@ Add via CDN links
 ## Usage/Examples
 
 ```javascript
-var formSchema = z.object({
-    email: z
-        .string()
-        .email("Please provide a valid email"),
-    password: z.string().min(6, "Password is too short"),
-    confirm: z.string().min(6, "Password is too short"),
-    accepted: z.coerce.boolean().refine((data) => data === true, {
-        message: "You must accept the terms and conditions",
-    }),
-}).refine((data) => data.password === data.confirm, {
-    message: "Passwords don't match",
-    path: ["confirm"],
-});
+var formSchema = z
+    .object({
+        email: z.string().email("Please provide a valid email"),
+        password: z.string().min(6, "Password is too short"),
+        confirm: z.string().min(6, "Password is too short"),
+        accepted: z.coerce.boolean().refine((data) => data === true, {
+            message: "You must accept the terms and conditions",
+        }),
+    })
+    .refine((data) => data.password === data.confirm, {
+        message: "Passwords don't match",
+        path: ["confirm"],
+    });
 
 formva({
     formEl: document.querySelector("form"),
@@ -83,7 +83,6 @@ formva({
 </form>
 ```
 
-
 ## Run Locally
 
 Clone the project
@@ -110,7 +109,6 @@ Start the server
   npm run start
 ```
 
-
 ## Contributing
 
 Contributions are always welcome!
@@ -119,7 +117,6 @@ Contributions are always welcome!
 
 [MIT](https://choosealicense.com/licenses/mit/)
 
-
 ## Acknowledgements
 
- - [Zod](https://zod.dev/)
+- [Zod](https://zod.dev/)
