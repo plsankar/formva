@@ -88,13 +88,13 @@ formva({
 Clone the project
 
 ```bash
-  git clone https://link-to-project
+  git clone [https://link-to-project](https://github.com/plsankar/formva.git)
 ```
 
 Go to the project directory
 
 ```bash
-  cd my-project
+  cd formva
 ```
 
 Install dependencies
